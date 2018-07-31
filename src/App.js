@@ -1,34 +1,37 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 import { getArtists } from "./repo";
 
 class App extends Component {
-  state = { artists: null };
+  state = { artists: null, artist_name: "" };  // Initial state
 
   componentDidMount() {
     getArtists().then(artists => {
-      this.setState({ artists });
-    }); // returns a promise
+      this.setState({ artists: artists });
+    }); 
+  }
+
+  handleChange = (event) => {
+    this.setState({artist_name: event.target.value});
   }
 
   render() {
-    console.log(this.state);
-    const { artists } = this.state; // Destructuring
+    const { artists, artist_name } = this.state; // Destructuring
 
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <div className="App-intro">
+        <form>
+          <label>Artist Name</label>
+          <input type="text" name="artist_name" placeholder="Artist Name" value={artist_name} onChange={this.handleChange}/>
+        </form>
+        <ul className="App-intro">
           {artists
             ? artists.map(artist => (
-                <div key={artist.id}> {artist.artist_name} </div>
+                <li key={artist.id}> {artist.artist_name} </li>
               ))
             : "Loading"}
-        </div>
+        </ul>
       </div>
     );
   }
