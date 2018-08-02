@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const ArtistPage = ({ match }) => (
+const ArtistPage = ({ artist }) => (
   <div className="main-content">
-    <h2>Artist Page</h2>
-    <h4>{match.params.artistId}</h4>
+    <h2>{artist.artist_name}</h2>
 
     <Link to="/">
       Home

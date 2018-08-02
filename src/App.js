@@ -56,7 +56,18 @@ class App extends Component {
             />
           </div>
           <div className="col-sm-6">
-            <Route exact path="/artists/:artistId" component={ArtistPage} />
+            <Route
+              exact
+              path="/artists/:artistId"
+              render={props => {
+                const artistId = parseInt(props.match.params.artistId, 10);
+                // If artists is not null then run second part
+                const artist =
+                  artists && artists.find(artist => artist.id === artistId);
+                // Only render ArtistPage if artist exists
+                return artist && <ArtistPage artist={artist} />;
+              }}
+            />
           </div>
         </div>
       </div>
