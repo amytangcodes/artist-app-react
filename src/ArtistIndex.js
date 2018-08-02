@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import { Link } from "react-router-dom";
+import sortBy from "lodash/sortBy";
 import styled from 'styled-components';
 import AddArtistForm from "./components/AddArtistForm";
 
@@ -19,7 +20,7 @@ class ArtistIndex extends Component {
         <AddArtistForm onSubmit={onAddArtist} />
         <ul className="App-intro">
           {artists
-            ? artists.map(artist => (
+            ? sortBy(artists, artist => artist.artist_name.toUpperCase()).map(artist => (
                 <li key={artist.id}>
                   <StyledLink  to={`/artists/${artist.id}`} replace>
                     {artist.artist_name}
