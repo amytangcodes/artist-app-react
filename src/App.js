@@ -7,7 +7,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 const App = () => (
   <BrowserRouter>
     <div>
-      <Route exact path="/" component={ArtistIndex} />
+      <Route path="/" component={ArtistIndex} />
       <Route exact path="/artists/:artistId" component={ArtistPage} />
     </div>
   </BrowserRouter>

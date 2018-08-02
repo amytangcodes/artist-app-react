@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import "./App.css";
 import { getArtists, addArtist, deleteArtist } from "./repo";
 import { Link } from "react-router-dom";
+import AddArtistForm from "./components/AddArtistForm";
 
 class ArtistIndex extends Component {
-  state = { artists: null, artist_name: "" }; // Initial state
+  state = { artists: null }; // Initial state
 
   componentDidMount() {
     const artists = getArtists();
@@ -14,13 +15,8 @@ class ArtistIndex extends Component {
     });
   }
 
-  handleChange = event => {
-    this.setState({ artist_name: event.target.value });
-  };
-
-  handleSubmit = event => {
-    event.preventDefault();
-    addArtist({ artist_name: this.state.artist_name }).then(artist => {
+  handleSubmit = artistDetails => {
+    addArtist(artistDetails).then(artist => {
       this.setState({ artists: this.state.artists.concat(artist) });
     });
   };
@@ -34,25 +30,16 @@ class ArtistIndex extends Component {
   };
 
   render() {
-    const { artists, artist_name } = this.state; // Destructuring
+    const { artists } = this.state; // Destructuring
 
     return (
       <div className="App">
-        <form onSubmit={this.handleSubmit}>
-          <label>Artist Name</label>
-          <input
-            type="text"
-            name="artist_name"
-            placeholder="Artist Name"
-            value={artist_name}
-            onChange={this.handleChange}
-          />
-        </form>
+        <AddArtistForm onSubmit={this.handleSubmit} />
         <ul className="App-intro">
           {artists
             ? artists.map(artist => (
                 <li key={artist.id}>
-                  <Link to={`/artists/${artist.id}`}>{artist.artist_name}</Link>
+                  <Link to={`/artists/${artist.id}`} replace>{artist.artist_name}</Link>
                   <button onClick={() => this.deleteEvent(artist.id)}>
                     Delete
                   </button>
