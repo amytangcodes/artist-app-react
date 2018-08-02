@@ -2,7 +2,12 @@ import React, { Component } from "react";
 import "./App.css";
 import { getArtists, addArtist, deleteArtist } from "./repo";
 import { Link } from "react-router-dom";
+import styled from 'styled-components';
 import AddArtistForm from "./components/AddArtistForm";
+
+const StyledLink = styled(Link)`
+  color: red;
+`; 
 
 class ArtistIndex extends Component {
   state = { artists: null }; // Initial state
@@ -15,8 +20,12 @@ class ArtistIndex extends Component {
     });
   }
 
-  // values and onSuccess are keys from an object
+  // values and onSuccess are keys from an object, hence the {}
   handleSubmit = ({ values, onSuccess, onError }) => {
+  // Alternative is destructuring:
+  // handleSubmit = () => {
+  //  const { values, onSuccess, onError } = this.state;
+    
     addArtist(values).then(artist => {
       if (artist.id) {
         this.setState({ artists: this.state.artists.concat(artist) });
@@ -46,9 +55,9 @@ class ArtistIndex extends Component {
           {artists
             ? artists.map(artist => (
                 <li key={artist.id}>
-                  <Link to={`/artists/${artist.id}`} replace>
+                  <StyledLink  to={`/artists/${artist.id}`} replace>
                     {artist.artist_name}
-                  </Link>
+                  </StyledLink>
                   <button onClick={() => this.deleteEvent(artist.id)} className="btn btn-default">
                     Delete
                   </button>

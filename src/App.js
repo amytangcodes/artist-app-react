@@ -6,7 +6,7 @@ import { BrowserRouter, Route } from "react-router-dom";
 // This is a simple component
 const App = () => (
   <BrowserRouter>
-    <div class="container">
+    <div className="container">
       <div className="row">
         <div className="col-sm-6">
           <Route path="/" component={ArtistIndex} />
