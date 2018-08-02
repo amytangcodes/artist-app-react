@@ -15,11 +15,14 @@ class ArtistIndex extends Component {
     });
   }
 
-  handleSubmit = (artistDetails, callback) => {
-    addArtist(artistDetails).then(artist => {
+  // values and onSuccess are keys from an object
+  handleSubmit = ({ values, onSuccess, onError }) => {
+    addArtist(values).then(artist => {
       if (artist.id) {
         this.setState({ artists: this.state.artists.concat(artist) });
-        callback();
+        onSuccess(); // This second arg will call: () => this.setState({artist_name: ""}));
+      } else {
+        onError(artist.message);
       }
       console.log(artist);
     });
@@ -46,7 +49,7 @@ class ArtistIndex extends Component {
                   <Link to={`/artists/${artist.id}`} replace>
                     {artist.artist_name}
                   </Link>
-                  <button onClick={() => this.deleteEvent(artist.id)}>
+                  <button onClick={() => this.deleteEvent(artist.id)} className="btn btn-default">
                     Delete
                   </button>
                 </li>
