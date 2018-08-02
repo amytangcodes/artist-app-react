@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Container = styled.section`
   padding: 4em;
@@ -8,8 +8,6 @@ const Container = styled.section`
 
 class AddArtistForm extends Component {
   state = { artist_name: "", errorMessage: null };
-
-  
 
   handleChange = event => {
     this.setState({ artist_name: event.target.value });
@@ -42,7 +40,7 @@ class AddArtistForm extends Component {
             style={{ color: errorMessage ? "red" : null }}
           />
         </form>
-        {errorMessage && <p>{errorMessage}</p>}  
+        {errorMessage && <p>{errorMessage}</p>}
         {/* && means if errorMessage is falsy run the next item */}
       </Container>
     );
