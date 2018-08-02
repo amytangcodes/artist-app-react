@@ -12,10 +12,7 @@ export const addArtist = artist =>
     body: JSON.stringify(artist)
   }).then(response => response.json());
 
-//  const foo = input => {
-//    // other stuff
-//    return { bar: "baz" };
-//  };
-
-//  // If it is only an object:
-//  const foo = input => ({bar: "baz"});
+export const deleteArtist = artist => 
+  fetch(`http://localhost:3000/artists/${artist.id}`, {
+    method: 'DELETE'
+  }).then(response => response.json());
