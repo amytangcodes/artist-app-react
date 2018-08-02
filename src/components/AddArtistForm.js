@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-
+import React, { Component } from "react";
 
 class AddArtistForm extends Component {
   state = { artist_name: "" };
@@ -10,8 +9,10 @@ class AddArtistForm extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    this.props.onSubmit({artist_name: this.state.artist_name});
-  }
+    this.props.onSubmit({
+      artist_name: this.state.artist_name
+    }, () => this.setState({ artist_name: "" }));
+  };
 
   render() {
     const { artist_name } = this.state;
@@ -27,7 +28,7 @@ class AddArtistForm extends Component {
           onChange={this.handleChange}
         />
       </form>
-    )
+    );
   }
 }
 

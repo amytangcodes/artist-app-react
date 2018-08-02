@@ -15,9 +15,13 @@ class ArtistIndex extends Component {
     });
   }
 
-  handleSubmit = artistDetails => {
+  handleSubmit = (artistDetails, callback) => {
     addArtist(artistDetails).then(artist => {
-      this.setState({ artists: this.state.artists.concat(artist) });
+      if (artist.id) {
+        this.setState({ artists: this.state.artists.concat(artist) });
+        callback();
+      }
+      console.log(artist);
     });
   };
 
@@ -39,7 +43,9 @@ class ArtistIndex extends Component {
           {artists
             ? artists.map(artist => (
                 <li key={artist.id}>
-                  <Link to={`/artists/${artist.id}`} replace>{artist.artist_name}</Link>
+                  <Link to={`/artists/${artist.id}`} replace>
+                    {artist.artist_name}
+                  </Link>
                   <button onClick={() => this.deleteEvent(artist.id)}>
                     Delete
                   </button>
