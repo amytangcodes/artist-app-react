@@ -3,13 +3,19 @@ import { Link } from "react-router-dom";
 
 const ArtistPage = ({ artist }) => (
   <div className="main-content">
-    <h2>{artist.artist_name}</h2>
+    <h1>{artist.artist_name}</h1>
+    <p>{artist.email}</p>
+    <p>
+      <Link to={() => (window.location.href = artist.website)}>
+        {artist.website}
+      </Link>
+    </p>
 
-    <Link to="/">
-      Home
-    </Link>
+    <div>
+      {/* <Link to="/edit">Edit</Link> */}
+    </div>
   </div>
-)
+);
 
 // Above is the same as return within curly braces:
 // const ArtistPage = () => {
