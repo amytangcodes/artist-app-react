@@ -51,6 +51,35 @@ class App extends Component {
   render() {
     const { artists } = this.state;
     return (
+      <main>
+        <nav className="navbar navbar-default">
+          <div className="container-fluid">
+            <div className="navbar-header">
+              <button
+                type="button"
+                className="navbar-toggle collapsed"
+                data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1"
+                aria-expanded="false"
+              >
+                <span className="sr-only">Toggle navigation</span>
+                <span className="icon-bar" />
+                <span className="icon-bar" />
+                <span className="icon-bar" />
+              </button>
+              <Link to="/" className="navbar-brand">
+                Home
+              </Link>
+            </div>
+            <button
+              onClick={this.handleOpenModal}
+              type="button"
+              class="btn btn-primary navbar-btn"
+            >
+              Add New Artist
+            </button>
+          </div>
+        </nav>
       <div className="container">
         <div className="row">
           <div className="col-sm-6">
@@ -88,6 +117,7 @@ class App extends Component {
             <button onClick={this.handleCloseModal}>Close</button>
           </ReactModal>
       </div>
+      </main>
     );
   }
 }
