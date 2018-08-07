@@ -80,6 +80,13 @@ class App extends Component {
             />
           </div>
         </div>
+          <ReactModal
+            isOpen={this.state.showModal}
+            contentLabel="Artist Add Form Modal"
+          >
+            <AddArtistForm onSubmit={onAddArtist} />
+            <button onClick={this.handleCloseModal}>Close</button>
+          </ReactModal>
       </div>
     );
   }

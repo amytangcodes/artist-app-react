@@ -7,28 +7,36 @@ import styled from "styled-components";
 // This is an example of a simple component
 const StyledLink = styled(Link)`
   color: red;
-`; 
+`;
+const ButtonContainer = styled.span`
+  margin: 0 15px;
+`;
 
 class ArtistIndex extends Component {
-
   render() {
-    const { artists, onAddArtist, onDeleteArtist } = this.props; // Destructuring
+    const { artists, onDeleteArtist } = this.props; // Destructuring
 
     return (
       <div className="App">
-        <AddArtistForm onSubmit={onAddArtist} />
-        <ul className="App-intro">
+        <ul className="App-intro list-group">
           {artists
-            ? sortBy(artists, artist => artist.artist_name.toUpperCase()).map(artist => (
-                <li key={artist.id}>
-                  <StyledLink  to={`/artists/${artist.id}`} replace>
-                    {artist.artist_name}
-                  </StyledLink>
-                  <button onClick={() => onDeleteArtist(artist.id)} className="btn btn-default">
-                    Delete
-                  </button>
-                </li>
-              ))
+            ? sortBy(artists, artist => artist.artist_name.toUpperCase()).map(
+                artist => (
+                  <li key={artist.id} className="list-group-item">
+                    <StyledLink to={`/artists/${artist.id}`} replace>
+                      {artist.artist_name}
+                    </StyledLink>
+                    <ButtonContainer>
+                      <button
+                        onClick={() => onDeleteArtist(artist.id)}
+                        className="btn btn-default"
+                      >
+                        Delete
+                      </button>
+                    </ButtonContainer>
+                  </li>
+                )
+              )
             : "Loading"}
         </ul>
       </div>
