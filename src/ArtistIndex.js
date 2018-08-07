@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import "./App.css";
 import { Link } from "react-router-dom";
 import sortBy from "lodash/sortBy";
-import styled from 'styled-components';
-import AddArtistForm from "./components/AddArtistForm";
+import styled from "styled-components";
 
 // This is an example of a simple component
 const StyledLink = styled(Link)`

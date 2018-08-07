@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import ArtistIndex from "./ArtistIndex";
 import ArtistPage from "./components/ArtistPage";
+import { Link } from "react-router-dom";
 import { getArtists, addArtist, deleteArtist } from "./repo";
 import { Route } from "react-router-dom";
+import ReactModal from "react-modal";
+import AddArtistForm from "./components/AddArtistForm";
 
 class App extends Component {
-  state = { artists: null };
+  state = { artists: null, showModal: false };
 
   componentDidMount() {
     getArtists().then(artists => {
@@ -38,6 +41,13 @@ class App extends Component {
     });
   };
 
+  handleOpenModal = () => {
+    this.setState({ showModal: true });
+  };
+
+  handleCloseModal = () => {
+    this.setState({ showModal: false });
+  };
   render() {
     const { artists } = this.state;
     return (
