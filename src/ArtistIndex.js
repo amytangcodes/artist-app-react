@@ -10,6 +10,9 @@ const StyledLink = styled(Link)`
 `;
 const ButtonContainer = styled.span`
   margin: 0 15px;
+  position: absolute;
+  right: 10px;
+  bottom: 12px;
 `;
 
 class ArtistIndex extends Component {

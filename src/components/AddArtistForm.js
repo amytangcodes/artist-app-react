@@ -2,10 +2,13 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 const Container = styled.section`
-  padding: 4em;
-  background: papayawhip;
+  margin: 20px;
+  padding: 20px;
 `;
 
+const Label = styled.label`
+  margin-right: 10px;
+`
 class AddArtistForm extends Component {
   state = { artist_name: "", errorMessage: null };
 
@@ -30,7 +33,7 @@ class AddArtistForm extends Component {
     return (
       <Container>
         <form onSubmit={this.handleSubmit}>
-          <label>Artist Name</label>
+          <Label>Artist Name</Label>
           <input
             type="text"
             name="artist_name"

@@ -1,19 +1,23 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 const ArtistPage = ({ artist }) => (
   <div className="main-content">
+    <div className="page-header">
     <h1>{artist.artist_name}</h1>
+      <button>Edit</button>
+    </div>
+    <div className="row">
+      <div className="col-xs-12">
     <p>{artist.email}</p>
     <p>
-      <Link to={() => (window.location.href = artist.website)}>
+        <a href={"http://" + artist.website} target="_blank">
         {artist.website}
-      </Link>
+        </a>
     </p>
-
-    <div>
-      {/* <Link to="/edit">Edit</Link> */}
+      </div>
     </div>
+
   </div>
 );
 

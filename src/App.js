@@ -4,8 +4,17 @@ import ArtistPage from "./components/ArtistPage";
 import { Link } from "react-router-dom";
 import { getArtists, addArtist, deleteArtist } from "./repo";
 import { Route } from "react-router-dom";
+import styled from "styled-components";
 import ReactModal from "react-modal";
 import AddArtistForm from "./components/AddArtistForm";
+
+const ButtonContainer = styled.span`
+  position: absolute;
+  right: 10px;
+  top: 10px;
+`;
+
+ReactModal.setAppElement('#root');
 
 class App extends Component {
   state = { artists: null, showModal: false };
