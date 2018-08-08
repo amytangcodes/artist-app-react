@@ -80,18 +80,20 @@ class App extends Component {
                 Home
               </Link>
             </div>
+            <div className="nav navbar-nav navbar-right">
             <button
               onClick={this.handleOpenModal}
               type="button"
-              class="btn btn-primary navbar-btn"
+                className="btn btn-primary navbar-btn"
             >
               Add New Artist
             </button>
           </div>
+          </div>
         </nav>
       <div className="container">
         <div className="row">
-          <div className="col-sm-6">
+            <div className="col-sm-5">
             <Route
               path="/"
               render={() => (
@@ -103,6 +105,7 @@ class App extends Component {
               )}
             />
           </div>
+            <div className="col-sm-1"></div>
           <div className="col-sm-6">
             <Route
               exact
@@ -121,9 +124,27 @@ class App extends Component {
           <ReactModal
             isOpen={this.state.showModal}
             contentLabel="Artist Add Form Modal"
+            onRequestClose={this.handleCloseModal}
+            style={{
+              content: {
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                height: '60%',
+                width: '70%',
+                border: '1px solid rgb(204, 204, 204)',
+                background: 'rgb(255, 255, 255)',
+                overflow: 'auto',
+                borderRadius: '4px',
+                outline: 'none',
+                padding: '20px',
+              }
+            }}
           >
             <AddArtistForm onSubmit={onAddArtist} />
+            <ButtonContainer>
             <button onClick={this.handleCloseModal}>Close</button>
+            </ButtonContainer>
           </ReactModal>
       </div>
       </main>
