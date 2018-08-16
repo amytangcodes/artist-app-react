@@ -1,27 +1,41 @@
 import React, { Component } from "react";
 import ArtistIndex from "./ArtistIndex";
 import ArtistPage from "./components/ArtistPage";
-import { Link } from "react-router-dom";
-import { getArtists, addArtist, deleteArtist } from "./repo";
+import TourPage from "./components/TourPage";
+import Nav from "./components/Nav";
+import {
+  getArtists,
+  addArtist,
+  deleteArtist,
+  getTours,
+  getEvents
+} from "./repo";
 import { Route } from "react-router-dom";
+import FormModal from "./components/FormModal";
 import styled from "styled-components";
-import ReactModal from "react-modal";
-import AddArtistForm from "./components/AddArtistForm";
 
-const ButtonContainer = styled.span`
-  position: absolute;
-  right: 10px;
-  top: 10px;
+const Main = styled.main`
+  background: #f5f8fa;
 `;
 
-ReactModal.setAppElement('#root');
-
 class App extends Component {
-  state = { artists: null, showModal: false };
+  state = {
+    artists: null,
+    showModal: false,
+    artistTours: null,
+    tours: null,
+    events: null
+  };
 
   componentDidMount() {
     getArtists().then(artists => {
       this.setState({ artists: artists });
+    });
+    getTours().then(tours => {
+      this.setState({ tours: tours });
+    });
+    getEvents().then(events => {
+      this.setState({ events: events });
     });
   }
 
@@ -32,9 +46,13 @@ class App extends Component {
     //  const { values, onSuccess, onError } = this.state;
 
     addArtist(values).then(artist => {
+      console.log("This is what values is: ", values);
       if (artist.id) {
-        this.setState({ artists: this.state.artists.concat(artist) });
-        onSuccess(); // This second arg will call: () => this.setState({artist_name: ""}));
+        onSuccess(); // This arg will call: () => this.setState({artist_name: ""}));
+        this.setState({
+          artists: this.state.artists.concat(artist),
+          showModal: false
+        });
       } else {
         onError(artist.message);
       }
@@ -57,97 +75,73 @@ class App extends Component {
   handleCloseModal = () => {
     this.setState({ showModal: false });
   };
+
   render() {
-    const { artists } = this.state;
+    const { artists, showModal, tours, events } = this.state;
+
     return (
-      <main>
-        <nav className="navbar navbar-default">
-          <div className="container-fluid">
-            <div className="navbar-header">
-              <button
-                type="button"
-                className="navbar-toggle collapsed"
-                data-toggle="collapse"
-                data-target="#bs-example-navbar-collapse-1"
-                aria-expanded="false"
-              >
-                <span className="sr-only">Toggle navigation</span>
-                <span className="icon-bar" />
-                <span className="icon-bar" />
-                <span className="icon-bar" />
-              </button>
-              <Link to="/" className="navbar-brand">
-                Home
-              </Link>
-            </div>
-            <div className="nav navbar-nav navbar-right">
-            <button
-              onClick={this.handleOpenModal}
-              type="button"
-                className="btn btn-primary navbar-btn"
-            >
-              Add New Artist
-            </button>
-          </div>
-          </div>
-        </nav>
-      <div className="container">
-        <div className="row">
+      <Main>
+        <Nav handleOpenModal={this.handleOpenModal} />
+        <div className="container">
+          <div className="row">
             <div className="col-sm-5">
-            <Route
-              path="/"
-              render={() => (
-                <ArtistIndex
-                  artists={artists}
-                  onAddArtist={this.handleAddArtist}
-                  onDeleteArtist={this.handleDeleteArtist}
-                />
-              )}
-            />
+              <Route
+                path="/"
+                render={() => (
+                  <ArtistIndex
+                    artists={artists}
+                    onDeleteArtist={this.handleDeleteArtist}
+                  />
+                )}
+              />
+            </div>
+            
+            <div className="col-sm-7">
+              <Route
+                exact
+                path="/artists/:artistId"
+                render={props => {
+                  const artistId = parseInt(props.match.params.artistId, 10);
+                  // If artists is not null then run second part
+                  const artist =
+                    artists && artists.find(artist => artist.id === artistId);
+                  const toursForArtist =
+                    tours &&
+                    tours.filter(tour =>
+                      tour.artists.some(artist => artist.id === artistId)
+                    );
+                  // Only render ArtistPage if artist exists
+                  return (
+                    artist &&
+                    tours && (
+                      <ArtistPage artist={artist} tours={toursForArtist} />
+                    )
+                  );
+                }}
+              />
+              <Route
+                exact
+                path="/tours/:tourId"
+                render={props => {
+                  const tourId = parseInt(props.match.params.tourId, 10);
+                  const tour = tours && tours.find(tour => tour.id === tourId);
+                  const eventsForTour =
+                    events && events.filter(event => event.tour_id === tourId);
+                  return (
+                    tour &&
+                    events && <TourPage tour={tour} events={eventsForTour} />
+                  );
+                }}
+              />
+            </div>
           </div>
-            <div className="col-sm-1"></div>
-          <div className="col-sm-6">
-            <Route
-              exact
-              path="/artists/:artistId"
-              render={props => {
-                const artistId = parseInt(props.match.params.artistId, 10);
-                // If artists is not null then run second part
-                const artist =
-                  artists && artists.find(artist => artist.id === artistId);
-                // Only render ArtistPage if artist exists
-                return artist && <ArtistPage artist={artist} />;
-              }}
-            />
-          </div>
+          <FormModal
+            showModal={showModal}
+            onCloseModal={this.handleCloseModal}
+            onAddArtist={this.handleAddArtist}
+          />
         </div>
-          <ReactModal
-            isOpen={this.state.showModal}
-            contentLabel="Artist Add Form Modal"
-            onRequestClose={this.handleCloseModal}
-            style={{
-              content: {
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                height: '60%',
-                width: '70%',
-                border: '1px solid rgb(204, 204, 204)',
-                background: 'rgb(255, 255, 255)',
-                overflow: 'auto',
-                borderRadius: '4px',
-                outline: 'none',
-                padding: '20px',
-              }
-            }}
-          >
-            <AddArtistForm onSubmit={onAddArtist} />
-            <ButtonContainer>
-            <button onClick={this.handleCloseModal}>Close</button>
-            </ButtonContainer>
-          </ReactModal>
-      </div>
-      </main>
+      </Main>
     );
   }
 }

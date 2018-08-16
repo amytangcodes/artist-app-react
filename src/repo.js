@@ -5,14 +5,20 @@ export const getArtists = () =>
 
 export const addArtist = artist =>
   fetch("http://localhost:3000/artists", {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json"
     },
     body: JSON.stringify(artist)
   }).then(response => response.json());
 
-export const deleteArtist = artist => 
+export const deleteArtist = artist =>
   fetch(`http://localhost:3000/artists/${artist.id}`, {
-    method: 'DELETE'
+    method: "DELETE"
   }).then(response => response.json());
+
+export const getTours = () => 
+  fetch("http://localhost:3000/tours").then(response => response.json());
+
+export const getEvents = () =>
+  fetch("http://localhost:3000/events").then(response => response.json());

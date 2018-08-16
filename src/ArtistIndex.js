@@ -32,7 +32,7 @@ class ArtistIndex extends Component {
                     <ButtonContainer>
                       <button
                         onClick={() => onDeleteArtist(artist.id)}
-                        className="btn btn-default"
+                        className="btn btn-default btn-xs"
                       >
                         Delete
                       </button>

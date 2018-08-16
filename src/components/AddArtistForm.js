@@ -8,43 +8,82 @@ const Container = styled.section`
 
 const Label = styled.label`
   margin-right: 10px;
-`
+`;
+
 class AddArtistForm extends Component {
-  state = { artist_name: "", errorMessage: null };
+  state = {
+    artist_name: "",
+    errorMessage: null,
+    email: "",
+    website: ""
+  };
 
   handleChange = event => {
-    this.setState({ artist_name: event.target.value });
+    this.setState({ [event.target.name]: event.target.value });
   };
 
   handleSubmit = event => {
     event.preventDefault();
     this.props.onSubmit({
       values: {
-        artist_name: this.state.artist_name
+        artist_name: this.state.artist_name,
+        email: this.state.email,
+        website: this.state.website
       },
-      onSuccess: () => this.setState({ artist_name: "", errorMessage: null }),
+      onSuccess: () =>
+        this.setState({
+          artist_name: "",
+          errorMessage: null,
+          email: "",
+          website: ""
+        }),
       onError: message => this.setState({ errorMessage: message })
     });
   };
 
   render() {
-    const { artist_name, errorMessage } = this.state;
-    console.log(this.state);
+    const { artist_name, errorMessage, email, website } = this.state;
+
     return (
       <Container>
-        <form onSubmit={this.handleSubmit}>
-          <Label>Artist Name</Label>
-          <input
-            type="text"
-            name="artist_name"
-            placeholder="Artist Name"
-            value={artist_name}
-            onChange={this.handleChange}
-            style={{ color: errorMessage ? "red" : null }}
-          />
+        <form onSubmit={this.handleSubmit} >
+          <p>
+            <Label>Artist Name</Label>
+            <input
+              type="text"
+              name="artist_name"
+              placeholder="Artist Name"
+              value={artist_name}
+              onChange={this.handleChange}
+              style={{ color: errorMessage ? "red" : null }}
+            />
+          </p>
+          <p>
+            <Label>Email</Label>
+            <input
+              type="text"
+              name="email"
+              placeholder="Email"
+              value={email}
+              onChange={this.handleChange}
+            />
+          </p>
+          <p>
+            <Label>Website</Label>
+            <input
+              type="text"
+              name="website"
+              placeholder="Website"
+              value={website}
+              onChange={this.handleChange}
+            />
+          </p>
+          <p>
+            <input type="submit" value="submit" /> 
+          </p>
         </form>
         {errorMessage && <p>{errorMessage}</p>}
-        {/* && means if errorMessage is falsy run the next item */}
+        {/* && means if errorMessage is falsy/ exists run the next item */}
       </Container>
     );
   }
