@@ -1,11 +1,24 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 
+const Container = styled.div`
+  // position: fixed;
+  // top: 0;
+  // bottom: 0;
+  // right: 0;
+  // left: 0;
+  // padding-top: 30%;
+  // padding-left: 70%;
+  // background: rgba(218, 85, 186, 0.1);
+`
 class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
-      website: ""
+      id: props.artist.id,
+      email: props.artist.email,
+      website: props.artist.website,
+      errorMessage: null
     };
   }
 
@@ -17,54 +30,54 @@ class EditProfile extends Component {
     event.preventDefault();
     this.props.onSubmit({
       values: {
+        id: this.state.id,
         email: this.state.email,
-        website: this.state.website
+        website: this.state.website,
       },
-      // onSuccess: () => ( 
-      //   console.log("It worked!")
-      // )
+      onError: message => this.setState({ errorMessage: message })
     });
   };
 
   render() {
-    const { handleEditing } = this.props;
-    const { email, website } = this.state;
+    const { toggleEditing } = this.props;
+    const { email, website, errorMessage } = this.state;
+    console.log(this.state.errorMessage);
 
     return (
-      <div>
-        <div className="panel panel-default">
+      <Container onClick={this.handleClick}>
+        <div className="panel panel-default panel-modal">
           <div className="panel-body">
             <h4>Contact Email:</h4>
             <input
               type="text"
               name="email"
-              placeholder="email"
+              placeholder="Edit Email"
               value={email}
               onChange={this.handleChange.bind(this)}
             />
-            <p>{this.state.email}</p>
+
+            {errorMessage && <p>{this.state.errorMessage}</p>}
 
             <h4>Website:</h4>
             <input
               type="text"
               name="website"
-              placeholder="Edit website"
+              placeholder="Edit Website"
               value={website}
               onChange={this.handleChange.bind(this)}
             />
-            <p>{this.state.website}</p>
           </div>
         </div>
 
-        <div>
+        <div className="button-container">
           <button className="pull-right" onClick={this.handleSubmit}>
             <span>Save</span>
           </button>
-          <button className="pull-left" onClick={handleEditing}>
+          <button className="pull-left" onClick={toggleEditing}>
             <span>Cancel</span>
           </button>
         </div>
-      </div>
+      </Container>
     );
   }
 }

@@ -12,6 +12,15 @@ export const addArtist = artist =>
     body: JSON.stringify(artist)
   }).then(response => response.json());
 
+export const updateArtist = artist => 
+  fetch(`http://localhost:3000/artists/${artist.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(artist)
+  }).then(response => response.json());
+
 export const deleteArtist = artist =>
   fetch(`http://localhost:3000/artists/${artist.id}`, {
     method: "DELETE"

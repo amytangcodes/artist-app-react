@@ -8,15 +8,26 @@ import {
   addArtist,
   deleteArtist,
   getTours,
-  getEvents
+  getEvents,
+  updateArtist
 } from "./repo";
 import { Route } from "react-router-dom";
 import FormModal from "./components/FormModal";
 import styled from "styled-components";
 
-const Main = styled.main`
-  background: #f5f8fa;
-`;
+const Overlay = styled.div`
+  background: rgba(218, 85, 186, 0.1);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+`
+const RightColumn = styled.div`
+  position: relative;
+  z-index: 10;
+`
 
 class App extends Component {
   state = {
@@ -24,7 +35,9 @@ class App extends Component {
     showModal: false,
     artistTours: null,
     tours: null,
-    events: null
+    events: null,
+    isEditing: false,
+    displayOverlay: false
   };
 
   componentDidMount() {
@@ -46,7 +59,7 @@ class App extends Component {
     //  const { values, onSuccess, onError } = this.state;
 
     addArtist(values).then(artist => {
-      console.log("This is what values is: ", values);
+      console.log("in app this is what values is: ", values);
       if (artist.id) {
         onSuccess(); // This arg will call: () => this.setState({artist_name: ""}));
         this.setState({
@@ -76,11 +89,37 @@ class App extends Component {
     this.setState({ showModal: false });
   };
 
+  toggleEditing = () => {
+    const { isEditing, displayOverlay } = this.state;
+    this.setState({ 
+      isEditing: !isEditing,
+      displayOverlay: !displayOverlay
+    });
+  };
+
+  handleEditProfile = ({ values, onError }) => {
+    // console.log(updateArtist(values));
+    updateArtist(values).then(resp => {
+      if (resp.id) {
+        this.setState({
+          artists: this.state.artists
+            .filter(({ id }) => id !== resp.id)
+            .concat(resp),
+          // ...this.state.artists.filter(({ id }) => id !== resp.id), resp
+          isEditing: false,
+          displayOverlay: false
+        });
+      } else {
+        onError(resp.message);
+      }
+    });
+  };
+
   render() {
-    const { artists, showModal, tours, events } = this.state;
+    const { artists, showModal, tours, events, isEditing, displayOverlay } = this.state;
 
     return (
-      <Main>
+      <main>
         <Nav handleOpenModal={this.handleOpenModal} />
         <div className="container">
           <div className="row">
@@ -95,8 +134,8 @@ class App extends Component {
                 )}
               />
             </div>
-            
-            <div className="col-sm-7">
+
+            <RightColumn className="col-sm-7">
               <Route
                 exact
                 path="/artists/:artistId"
@@ -114,7 +153,13 @@ class App extends Component {
                   return (
                     artist &&
                     tours && (
-                      <ArtistPage artist={artist} tours={toursForArtist} />
+                      <ArtistPage
+                        artist={artist}
+                        tours={toursForArtist}
+                        isEditing={isEditing}
+                        onEditProfile={this.handleEditProfile}
+                        toggleEditing={this.toggleEditing}
+                      />
                     )
                   );
                 }}
@@ -133,15 +178,18 @@ class App extends Component {
                   );
                 }}
               />
-            </div>
+            </RightColumn>
           </div>
+          
+          { displayOverlay ? <Overlay /> : null }
+          
           <FormModal
             showModal={showModal}
             onCloseModal={this.handleCloseModal}
             onAddArtist={this.handleAddArtist}
           />
         </div>
-      </Main>
+      </main>
     );
   }
 }

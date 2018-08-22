@@ -1,6 +1,6 @@
 import React from "react";
 
-const DisplayProfile = ({ artist, handleEditing }) => (
+const DisplayProfile = ({ artist, toggleEditing }) => (
   <div>
     <div className="panel panel-default">
       <div className="panel-body">
@@ -15,9 +15,14 @@ const DisplayProfile = ({ artist, handleEditing }) => (
         </p>
       </div>
     </div>
-    <button className="pull-right" onClick={handleEditing}>
-      <span>Edit Profile</span>
-    </button>
+    <div className="button-container">
+      <button 
+        className="pull-right" 
+        onClick={toggleEditing}
+      >
+        <span>Edit Profile</span>
+      </button>
+    </div>
   </div>
 );
 
