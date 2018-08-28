@@ -7,8 +7,6 @@ body {
   position: relative;
 }
 
-
-
 .button-container {
   padding-top: 5px;
   padding-bottom: 50px;
@@ -16,4 +14,20 @@ body {
 
 .ReactModal__Overlay {
   z-index: 100;
+}
+
+.modal-header, .modal-footer {
+  border: 0;
+}
+
+.add-artist-content td {
+  padding-bottom: 10px;
+}
+
+.add-artist-content input {
+  padding: 5px 10px;
+}
+
+.navbar-right {
+  padding-right: 15px;
 }

@@ -32,9 +32,8 @@ class FormModal extends Component {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            height: '60%',
-            width: '70%',
-            border: '1px solid rgb(204, 204, 204)',
+            height: '45%',
+            width: '50%',
             background: 'rgb(255, 255, 255)',
             overflow: 'auto',
             borderRadius: '4px',
@@ -45,7 +44,7 @@ class FormModal extends Component {
       >
         <AddArtistForm onSubmit={onAddArtist} />
         <ButtonContainer>
-          <button onClick={onCloseModal}>Close</button>
+          <button onClick={onCloseModal} className="close"><span aria-hidden="true">&times;</span></button>
         </ButtonContainer>
       </ReactModal>
     );

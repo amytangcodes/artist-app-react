@@ -12,7 +12,7 @@ export const addArtist = artist =>
     body: JSON.stringify(artist)
   }).then(response => response.json());
 
-export const updateArtist = artist => 
+export const updateArtist = artist =>
   fetch(`http://localhost:3000/artists/${artist.id}`, {
     method: "PUT",
     headers: {
@@ -26,8 +26,17 @@ export const deleteArtist = artist =>
     method: "DELETE"
   }).then(response => response.json());
 
-export const getTours = () => 
+export const getTours = () =>
   fetch("http://localhost:3000/tours").then(response => response.json());
+
+export const addTours = tour =>
+  fetch("http://localhost:3000/tours", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(tour)
+  }).then(response => response.json());
 
 export const getEvents = () =>
   fetch("http://localhost:3000/events").then(response => response.json());

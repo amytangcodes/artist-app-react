@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ArtistIndex from "./ArtistIndex";
 import ArtistPage from "./components/ArtistPage";
+import TourIndexPage from "./components/TourIndexPage";
 import TourPage from "./components/TourPage";
 import Nav from "./components/Nav";
 import {
@@ -8,6 +9,7 @@ import {
   addArtist,
   deleteArtist,
   getTours,
+  addTours,
   getEvents,
   updateArtist
 } from "./repo";
@@ -177,6 +179,15 @@ class App extends Component {
                     events && <TourPage tour={tour} events={eventsForTour} />
                   );
                 }}
+              />
+
+              <Route
+                path="/tours"
+                render={() => (
+                  <TourIndexPage
+                    tours={tours}
+                  />
+                )}
               />
             </RightColumn>
           </div>

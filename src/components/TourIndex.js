@@ -20,6 +20,11 @@ class TourIndex extends Component {
               </StyledLink>
             </li>
         ))}
+          <li className="list-group-item">
+            <StyledLink to={`/tours`}>
+              See all tours...
+            </StyledLink>
+          </li>
       </div>
     );
   }

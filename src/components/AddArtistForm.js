@@ -1,13 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 
-const Container = styled.section`
-  margin: 20px;
-  padding: 20px;
-`;
-
 const Label = styled.label`
-  margin-right: 10px;
+  margin-right: 30px;
 `;
 
 class AddArtistForm extends Component {
@@ -45,46 +40,69 @@ class AddArtistForm extends Component {
     const { artist_name, errorMessage, email, website } = this.state;
 
     return (
-      <Container>
-        <form onSubmit={this.handleSubmit} >
-          <p>
-            <Label>Artist Name</Label>
-            <input
-              type="text"
-              name="artist_name"
-              placeholder="Artist Name"
-              value={artist_name}
-              onChange={this.handleChange}
-              style={{ color: errorMessage ? "red" : null }}
-            />
-          </p>
-          <p>
-            <Label>Email</Label>
-            <input
-              type="text"
-              name="email"
-              placeholder="Email"
-              value={email}
-              onChange={this.handleChange}
-            />
-          </p>
-          <p>
-            <Label>Website</Label>
-            <input
-              type="text"
-              name="website"
-              placeholder="Website"
-              value={website}
-              onChange={this.handleChange}
-            />
-          </p>
-          <p>
-            <input type="submit" value="submit" /> 
-          </p>
+      <section className="add-artist-form">
+        <div className="modal-header">
+          <h4 className="modal-title">Add New Artist</h4>
+        </div>
+        <form onSubmit={this.handleSubmit}>
+          <div className="modal-body">
+            <table className="add-artist-content">
+              <tbody>
+                <tr>
+                  <td>
+                    <Label>Artist Name</Label>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      name="artist_name"
+                      placeholder="Artist Name"
+                      value={artist_name}
+                      onChange={this.handleChange}
+                      style={{ color: errorMessage ? "red" : null }}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <Label>Email</Label>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      name="email"
+                      placeholder="Email"
+                      value={email}
+                      onChange={this.handleChange}
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <Label>Website</Label>
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      name="website"
+                      placeholder="Website"
+                      value={website}
+                      onChange={this.handleChange}
+                    />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            {errorMessage && <p>{errorMessage}</p>}
+            {/* && means if errorMessage is falsy/ exists run the next item */}
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="submit" value="submit">
+              Save changes
+            </button>
+          </div>
         </form>
-        {errorMessage && <p>{errorMessage}</p>}
-        {/* && means if errorMessage is falsy/ exists run the next item */}
-      </Container>
+      </section>
     );
   }
 }
