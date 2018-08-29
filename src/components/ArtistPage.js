@@ -13,13 +13,13 @@ class ArtistPage extends Component {
   static propTypes = {
     artist: PropTypes.object.isRequired,
     tours: PropTypes.array.isRequired,
-    isEditing: PropTypes.bool.isRequired,
+    isEditingArtist: PropTypes.bool.isRequired,
     onEditProfile: PropTypes.func.isRequired,
     toggleEditing: PropTypes.func.isRequired
   };
 
   render() {
-    const { artist, tours, isEditing, onEditProfile, toggleEditing } = this.props;
+    const { artist, tours, isEditingArtist, onEditProfile, toggleEditing } = this.props;
 
     return (
       <div className="main-content">
@@ -27,7 +27,7 @@ class ArtistPage extends Component {
           <h1>{artist.artist_name}</h1>
         </div>
 
-        {isEditing === false ? (
+        {isEditingArtist === false ? (
           <DisplayProfile 
             artist={artist} 
             toggleEditing={toggleEditing} 

@@ -32,7 +32,7 @@ class FormModal extends Component {
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            height: '45%',
+            height: '50%',
             width: '50%',
             background: 'rgb(255, 255, 255)',
             overflow: 'auto',

@@ -42,7 +42,7 @@ class AddArtistForm extends Component {
     return (
       <section className="add-artist-form">
         <div className="modal-header">
-          <h4 className="modal-title">Add New Artist</h4>
+          <h3 className="modal-title">Add New Artist</h3>
         </div>
         <form onSubmit={this.handleSubmit}>
           <div className="modal-body">
@@ -97,7 +97,7 @@ class AddArtistForm extends Component {
             {/* && means if errorMessage is falsy/ exists run the next item */}
           </div>
           <div class="modal-footer">
-            <button class="btn btn-primary" type="submit" value="submit">
+            <button class="btn btn-success btn-lg btn-block" type="submit" value="submit">
               Save changes
             </button>
           </div>

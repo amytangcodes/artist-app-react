@@ -17,7 +17,7 @@ const DisplayProfile = ({ artist, toggleEditing }) => (
     </div>
     <div className="button-container">
       <button 
-        className="pull-right" 
+        className="btn btn-primary navbar-btn pull-right" 
         onClick={toggleEditing}
       >
         <span>Edit Profile</span>
